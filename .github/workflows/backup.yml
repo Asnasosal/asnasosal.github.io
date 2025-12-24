@@ -1,0 +1,23 @@
+name: Create backup archive
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Получение кода
+        uses: actions/checkout@v4
+
+      - name: Создание архива
+        run: zip -r backup.zip .
+
+      - name: Сохранение архива в облаке GitHub
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-backup
+          path: backup.zip
